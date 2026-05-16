@@ -2,14 +2,15 @@
 PLC-based lamp control with timer and counter - TIA Portal project
 # Industrial Lamp Control System
 
-PLC-based lamp control with auto-shutoff timer and usage lockout counter.
+PLC-based lamp control with auto-shutoff timer and usage lockout counter. This allows us to turn off the lamp before timer expires and lock out the ON state.
 
 ## Features
 - Start/Stop button control with seal-in circuit
-- Auto-turn on after 5 seconds (configurable timer)
-- Usage counter - locks out after 5 activations
+- Auto-turn off after 5 seconds (configurable timer)
+- Usage counter - locks out after 2 activations
 - Reset function to restore operation
 - Multi-language implementation (LAD, FBD, SCL)
+  
 
 ## Hardware
 - Siemens S7-1200 CPU 1212C AC/DC/Rly
@@ -24,13 +25,13 @@ PLC-based lamp control with auto-shutoff timer and usage lockout counter.
 | Count_Reset | %I0.1 | Bool | Resets counter to zero |
 | Lamp_On | %Q0.0 | Bool | Output lamp |
 | ButtonOff | %M0.1 | Bool | TRUE when count reaches 5 / turns off lamp circuit|
-| CounterCV | %MW0 | Int | Current count value (0-5) |
+| ButtonOff2 | %M0.2 | Bool | TRUE when timer  5s / turns off lamp circuit|
 
 ## Logic Description
 1. Press Start_Button → Lamp turns ON
 2. Timer counts 5 seconds → Lamp auto-shutoff
 3. Each activation increments counter
-4. After 5 activations → Count_Done blocks lamp
+4. After 2 activations → Count_Done blocks lamp
 5. Press Count_Reset → Counter resets, lamp enabled again
 
 ## Implementation Languages
